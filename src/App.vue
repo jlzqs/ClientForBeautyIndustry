@@ -1,36 +1,64 @@
 <template>
-  <v-app>
-    <v-app-bar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn
-        text
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-      >
-        <span class="mr-2">Latest Release</span>
-      </v-btn>
+<div id="app">
+  <v-app id="inspire">
+
+    <v-menu :drawer="drawer"></v-menu>
+
+    <v-app-bar
+      app
+      clipped-left
+    >
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-toolbar-title>Management System</v-toolbar-title>
+       <v-spacer></v-spacer>
+          <v-btn @click="showLogin()">Login</v-btn>
     </v-app-bar>
 
     <v-content>
-      <HelloWorld/>
+      <router-view></router-view>
     </v-content>
+
+    <v-footer app>
+      <span>&copy; 2019</span>
+    </v-footer>
+    <v-login ref="login"></v-login>
   </v-app>
+  
+</div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
-
-export default {
-  name: 'App',
-  components: {
-    HelloWorld,
-  },
-  data: () => ({
-    //
-  }),
-};
+import OperatorLogin from './components/OperatorLogin';
+let _this;
+import Menu from './components/Menu';
+  export default {
+    components: {
+      "v-login": OperatorLogin,
+      "v-menu": Menu,
+    },
+    props: {
+      source: String,
+    },
+    data: () => ({
+      drawer: true,
+      _this: null,
+      o:null
+    }),
+    methods: {
+      showLogin() {
+        
+        // window.scrollTo(0,0);
+        this.$refs.login.show();
+      },
+    },
+    created() {
+      _this = this;
+      this.$root.$on('showLogin', function() {
+        _this.showLogin();
+      });
+      this.$root.showLogin = () => {
+        _this.showLogin();
+      }
+    }
+  }
 </script>
