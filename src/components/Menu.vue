@@ -5,12 +5,12 @@
       clipped
     >
       <v-list dense>
-        <v-list-item @click="redirectTo('/')">
+        <v-list-item @click="redirectTo('/dashboard')">
           <v-list-item-action>
             <v-icon>mdi-view-dashboard</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>Customer register</v-list-item-title>
+            <v-list-item-title>仪表盘</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item @click="redirectTo('/about')">

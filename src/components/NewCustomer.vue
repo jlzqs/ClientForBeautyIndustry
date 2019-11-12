@@ -1,13 +1,28 @@
 <template>
   <v-card :elevation="5" class="ml-10 mt-2 mx-auto" width="800px" >
-      
     
-    <v-img src="https://cdn.vuetifyjs.com/images/cards/dark-beach.jpg" height="200px">
-    <v-card-title >Add a new customer</v-card-title>
-    </v-img>
-    <v-avatar>
-        <img src="https://cdn.vuetifyjs.com/images/john.jpg">
-    </v-avatar>
+    <v-row class="grey" >
+        <v-col cols="12">
+            <v-row>
+                <v-card-title >开客</v-card-title>
+            </v-row>
+            <v-row>
+                <div class="mx-auto">
+                    <v-avatar size="80" @click="uploadHeader()">
+                        <img src="https://cdn.vuetifyjs.com/images/john.jpg" ref="img">
+                    </v-avatar>
+
+                    <div class="d-inline-flex flex-column" inlined>
+                        <span class="ml-5" >{{ customer.nick }}</span>
+                        <span class="ml-5" >{{ customer.name }}</span>
+                    </div>
+                </div>
+            </v-row>
+            <input type="file" @change="fileSelected" ref="upload" v-show="false">
+        </v-col>
+        
+    </v-row>
+    
     <v-row justify="end" class="mt-n8">
         <v-col cols="2">
         <v-switch v-model="notice" label="Notice"></v-switch>
@@ -16,14 +31,15 @@
     <v-form>
     <v-row class="mt-n">
       <v-col class="col-lg-10 ml-10">
-        <v-text-field label="Name" v-model="customer.name" hint="Please entry your name" :persistent-hint="notice" clearable></v-text-field>
         <v-text-field
-        label="Nick"
-        hint="Please entry nick. e.g: Miss Wang"
-        :persistent-hint="notice"
-        clearable
-        v-model="customer.nick"
-        ></v-text-field>
+            label="Nick"
+            hint="Please entry nick. e.g: Miss Wang"
+            :persistent-hint="notice"
+            clearable
+            v-model="customer.nick"
+            ></v-text-field>
+        <v-text-field label="Name" v-model="customer.name" hint="Please entry your name" :persistent-hint="notice" clearable></v-text-field>
+        
         <v-layout>
             <span class="my-auto grey--text">Gender</span>
             <v-btn-toggle v-model="customer.gender" background-color="transparent" borderless>
@@ -78,6 +94,9 @@
   </v-card>
 </template>
 <script>
+// import FileReader from 'FileReader'
+// import { read } from 'fs';
+
 export default {
     data: () => ({
         notice: false,
@@ -104,6 +123,7 @@ export default {
             customerChannel: null,
             identityNo: '',
             address:'',
+            img:'',
         },
         ss: false
     }),
@@ -118,7 +138,8 @@ export default {
     methods: {
         save() {
             this.initCustomer();
-            this.$root.showLogin();
+            // this.$root.showLogin();
+            this.$root.showDialog('保存成功','用户保存成功！');
         },
         cancle() {
             
@@ -135,6 +156,24 @@ export default {
                 address:'',
             };
         },
+        uploadHeader() {
+            const upload = this.$refs.upload;
+            upload.click();
+            
+
+        },
+        fileSelected(e) {
+            var reader = new window.FileReader();
+            reader.onload = (ev) => {
+                
+                
+                this.$refs.img.src = ev.target.result;
+            };
+            reader.readAsDataURL(e.target.files[0]);
+            
+            
+            
+        }
     },
     
 };
