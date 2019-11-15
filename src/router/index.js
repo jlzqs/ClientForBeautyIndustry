@@ -27,12 +27,17 @@ const routes = [
   {
     path: '/newCustomer',
     name: 'newCustomer',
-    component: () => import('../components/NewCustomer')
+    component: () => import('../views/NewCustomer')
   },
   {
     path: '/dashboard',
     name:'dashboard',
-    component: () => import('../components/Dashboard')
+    component: () => import('../views/Dashboard')
+  },
+  {
+    path: '/baseInfoSetting',
+    name: 'baseInfoSetting',
+    component: () => import('../views/BaseInfoSetting')
   }
 ]
 

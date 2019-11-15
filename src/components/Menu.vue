@@ -29,6 +29,14 @@
             <v-list-item-title>开客</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+          <v-list-item @click="redirectTo('/baseInfoSetting')">
+          <v-list-item-action>
+            <v-icon>mdi-settings</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>基本资料设置</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
 </template>
