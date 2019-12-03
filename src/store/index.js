@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import departmentState from './department';
+import serviceItemState from './serviceItem';
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -11,5 +14,7 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
+    departmentState,
+    serviceItemState,
   }
 })

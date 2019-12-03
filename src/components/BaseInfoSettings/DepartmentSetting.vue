@@ -7,9 +7,9 @@
                 </v-btn>
             </v-col>
         </v-row>
-        <v-row>
-            <v-col cols="4">
-                <v-simple-table>
+        <v-row class="d-flex  justify-center">
+            
+                <v-simple-table class="flex-column">
                     <template v-slot:default>
                         <thead>
                             <tr>
@@ -35,32 +35,33 @@
                     </template>
                 </v-simple-table>
                 
-            </v-col>
-            <v-col cols="6" class="mx-auto">
-                    <v-row>
-                    <v-col cols="6" class="mx-auto">
+            
+                <div class="flex-column ml-5">
+                    <v-text-field class="mt-4" label="部门名称" placeholder="请输入部门名称" v-model="processing.name"></v-text-field>
+                    <v-btn color="primary" class="float-right" @click="save">保存</v-btn>
+                </div>
+                <!-- <v-row>
+                    <v-col cols="102" class="mx-left">
                         <v-text-field class="mt-4" label="部门名称" placeholder="请输入部门名称" v-model="processing.name"></v-text-field>
                     </v-col>
                 </v-row>
                 <v-row>
-                    <v-col cols="6" class="mx-auto">
+                    <v-col cols="12" class="mx-right">
                         <v-btn color="primary" class="float-right" @click="save">保存</v-btn>
+                        
                     </v-col>
-                </v-row>
-                
-            </v-col>
+                </v-row> -->
+
         </v-row>
     </v-container>
 </template>
 <script>
 export default {
     data() {
+        const departments = this.$store.state.departmentState.departments;
+
         return {
-            departments: [
-                { id: 1, code: '001', name: '美容' },
-                { id: 2, code: '002', name: '美发' },
-                { id: 3, code: '003', name: '推拿' }
-            ],
+            departments,
             processing: {
                 id: null,
                 name: ''
@@ -69,9 +70,7 @@ export default {
     },
     methods: {
         remove(id) {
-            let { index } = this.get(id);
-
-            this.departments.splice(index,1);
+            this.$store.dispatch('departmentState/deleteEntity', id);
 
             if (id == this.processing.id) {
                 this.initProcess();
@@ -80,28 +79,22 @@ export default {
         },
         modify(id) {
             let { index } = this.get(id);
-            
+
             this.processing = this.departments[index]
         },
         newDepartment() {
             this.initProcess();
         },
         get(id) {
-            
-            for(let index=0; index< this.departments.length; index++)
-            {
-                const d = this.departments[index];
+            const departments = this.$store.getters["departmentState/allDepartments"];
 
-                window.console.log(`${d.id} == ${id}, index=${index}`)
-                if (d.id == id) {
-                    return {
-                        department: d,
-                        index 
-                    };
+            for(let i=0; i< departments.length; i++) {
+                if (departments[i].id == id) {
+                    return { department: departments[i], index: i };
                 }
             }
 
-            return -1;
+            return null;
         },
         initProcess() {
             this.processing = {
