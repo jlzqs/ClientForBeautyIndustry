@@ -102,17 +102,15 @@ export default {
         modify(id) {
             this.selectedId = id
 
-            this.processingService = this.get(id).serviceItem;
+            this.processingService = this.get(id);
 
         },
         deleteService(id) {
-            const { index } = this.get(id);
-
-            this.allServiceItems.splice(index, 1);
+            this.$store.dispatch('serviceItemState/deleteEntity', id);
         },
         get(id) {
             const serviceItem = this.$store.getters["serviceItemState/get"](id);
-            if (!serviceItem || !serviceItem.serviceItem) {
+            if (!serviceItem) {
                 return null;
             }
 

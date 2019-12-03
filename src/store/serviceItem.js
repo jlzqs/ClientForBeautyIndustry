@@ -36,11 +36,11 @@ export default {
                 const serviceItem = state.serviceItems[i];
 
                 if (serviceItem.id == id) {
-
-                    return {
-                        index: i,
-                        serviceItem
-                    };
+                    return serviceItem;
+                    // return {
+                    //     index: i,
+                    //     serviceItem
+                    // };
                 }
             }
         }
@@ -49,9 +49,25 @@ export default {
         add(state, payload) {
             state.serviceItems.push(payload);
         },
-        update(state, { index, serviceItem }) {
-            state.serviceItems[index] = serviceItem;
+        update(state, serviceItem) {
+            for(let i=0;i< state.serviceItems.length;i++) {
+                const item = state.serviceItems[i];
+
+                if (item.id == serviceItem.id) {
+                    state.serviceItems[i] = serviceItem;
+                }
+            }
+            // state.serviceItems[index] = serviceItem;
             
+        },
+        delete: (state, id) => {
+            for(let i=0;i< state.serviceItems.length;i++) {
+                const item = state.serviceItems[i];
+
+                if (item.id == id) {
+                    state.serviceItems.splice(i, 1);
+                }
+            }
         }
     },
     actions: {
@@ -59,7 +75,7 @@ export default {
             commit('add', { id, code, name, departmentId })
         },
         updateEntity({ commit, getters}, { id, code, name, departmentId }) {
-            const { index, serviceItem } = getters.get(id);
+            const serviceItem = getters.get(id);
             if (!serviceItem) {
                 return null;
             }
@@ -67,7 +83,10 @@ export default {
             serviceItem.name = name;
             serviceItem.departmentId = departmentId;
 
-            commit('update', { index, serviceItem })
+            commit('update', serviceItem)
+        },
+        deleteEntity({ commit }, id) {
+            commit('delete', id);
         },
     }
     
