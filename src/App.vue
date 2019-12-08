@@ -9,7 +9,7 @@
       clipped-left
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>Management System</v-toolbar-title>
+      <v-toolbar-title>荣耀美业管理系统</v-toolbar-title>
        <v-spacer></v-spacer>
           <v-btn @click="showLogin()">Login</v-btn>
     </v-app-bar>

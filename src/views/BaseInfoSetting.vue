@@ -18,7 +18,7 @@
             </v-expansion-panel-content>
         </v-expansion-panel>
 
-        <v-expansion-panel>
+        <v-expansion-panel @change="onLoadServiceItems">
             <v-expansion-panel-header>
                 项目系列设置
             </v-expansion-panel-header>
@@ -39,6 +39,13 @@ export default {
         'v-departmentInfoSetting': DepartmentSetting,
         'v-serviceTypeSetting': ServiceTypeSetting,
     },
+    methods: {
+        onLoadServiceItems() {
+            window.console.log('----load');
+            this.$store.dispatch('serviceItemState/load');
+            window.console.log('----loaded');
+        }
+    }
     
 
 }

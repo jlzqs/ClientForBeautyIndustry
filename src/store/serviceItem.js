@@ -1,11 +1,13 @@
+import axios from 'axios';
+
 export default {
     namespaced: true,
     state: {
         serviceItems: [ 
-            { id: 1, code: '001', name: '净肤系列', departmentId: 1,  },
-            { id: 2, code: '002', name: '美肤系列', departmentId: 1,  },
-            { id: 3, code: '003', name: '洗发系列', departmentId: 2,  },
-            { id: 4, code: '004', name: '烫发系列',  },
+            // { id: 1, code: '001', name: '净肤系列', departmentId: 1,  },
+            // { id: 2, code: '002', name: '美肤系列', departmentId: 1,  },
+            // { id: 3, code: '003', name: '洗发系列', departmentId: 2,  },
+            // { id: 4, code: '004', name: '烫发系列',  },
         ]
     },
     getters: {
@@ -43,7 +45,7 @@ export default {
                     // };
                 }
             }
-        }
+        },
     },
     mutations: {
         add(state, payload) {
@@ -88,6 +90,19 @@ export default {
         deleteEntity({ commit }, id) {
             commit('delete', id);
         },
+        load({ state }) {
+            window.console.log('-----get all service items')
+            axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+            
+            axios.get('http://localhost:5000/api/1.0/UnitType').then((resp) => {
+                window.console.log('----got items', resp)
+                state.serviceItems = resp.data;
+                
+            })
+            .catch(err => {
+                window.console.log('----get servie items error', err)
+            })
+        }
     }
     
 }
